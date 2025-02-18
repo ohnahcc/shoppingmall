@@ -1,6 +1,7 @@
 package com.example.shoppingmall.controller;
 
 import com.example.shoppingmall.model.User;
+import com.example.shoppingmall.security.JwtUtil;
 import com.example.shoppingmall.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,15 +50,14 @@ public class UserController {
 
         Map<String, Object> response = new HashMap<>();
         if (user != null) {
+            String token = JwtUtil.generateToken(username); // JWT 토큰 생성
             response.put("message", "Login successful");
-            response.put("userId", user.getId());
+            response.put("token", token); // 응답에 JWT 포함
         } else {
             response.put("message", "Invalid username or password");
         }
         return response;
     }
-
-
 }
 
 
